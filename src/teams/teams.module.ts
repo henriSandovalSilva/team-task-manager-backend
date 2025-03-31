@@ -7,11 +7,7 @@ import { UsersModule } from 'src/users/users.module';
 import { TasksModule } from 'src/tasks/tasks.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Team]),
-    UsersModule,
-    TasksModule
-  ],
+  imports: [TypeOrmModule.forFeature([Team]), UsersModule, TasksModule],
   controllers: [TeamsController],
   providers: [TeamsService],
   exports: [TeamsService],

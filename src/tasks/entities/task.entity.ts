@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Team } from 'src/teams/entities/team.entity';
 import { Comment } from 'src/comments/entities/comment.entity';
@@ -32,13 +40,13 @@ export class Task {
   @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.PENDING })
   status: TaskStatus;
 
-  @ManyToOne(() => User, user => user.tasks, { eager: true })
+  @ManyToOne(() => User, (user) => user.tasks, { eager: true })
   responsible: User;
 
-  @ManyToOne(() => Team, team => team.tasks, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Team, (team) => team.tasks, { onDelete: 'CASCADE' })
   team: Team;
 
-  @OneToMany(() => Comment, comment => comment.task, { eager: true })
+  @OneToMany(() => Comment, (comment) => comment.task, { eager: true })
   comments: Comment[];
 
   @CreateDateColumn()

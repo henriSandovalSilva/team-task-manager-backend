@@ -27,9 +27,7 @@ import { TaskEventsConsumer } from './tasks/consumers/task-events.consumer';
       synchronize: false,
     }),
     RabbitMQModule.forRoot({
-      exchanges: [
-        { name: 'task_exchange', type: 'topic' }
-      ],
+      exchanges: [{ name: 'task_exchange', type: 'topic' }],
       uri: process.env.RABBITMQ_URI,
     }),
     UsersModule,
@@ -39,11 +37,7 @@ import { TaskEventsConsumer } from './tasks/consumers/task-events.consumer';
     CommentsModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    TaskGateway,
-    TaskEventsConsumer
-  ],
-  exports: [RabbitMQModule]
+  providers: [AppService, TaskGateway, TaskEventsConsumer],
+  exports: [RabbitMQModule],
 })
 export class AppModule {}

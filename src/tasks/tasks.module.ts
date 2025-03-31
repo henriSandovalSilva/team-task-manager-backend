@@ -12,7 +12,7 @@ import { Comment } from 'src/comments/entities/comment.entity';
   imports: [
     TypeOrmModule.forFeature([Task, Comment, User]),
     UsersModule,
-    forwardRef(() => TeamsModule)
+    forwardRef(() => TeamsModule),
   ],
   controllers: [TasksController],
   providers: [TasksService],

@@ -17,7 +17,7 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
     const user = await this.usersService.create(createUserDto);
-    const { password, ...result } = user;
+    const { password: _, ...result } = user;
 
     return result;
   }

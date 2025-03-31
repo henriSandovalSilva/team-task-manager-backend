@@ -9,7 +9,7 @@ export class TaskEventsConsumer {
   @RabbitSubscribe({
     exchange: 'task_exchange',
     routingKey: 'task.status.changed',
-    queue: 'task-status-changed-queue'
+    queue: 'task-status-changed-queue',
   })
   handleStatusChange(payload: any) {
     console.log('Evento recebido via RabbitMQ:', payload);

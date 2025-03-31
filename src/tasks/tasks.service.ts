@@ -36,10 +36,10 @@ export class TasksService {
 
   findAll(): Promise<Task[]> {
     return this.tasksRepository.find({
-      relations: ['responsible', 'team'], 
+      relations: ['responsible', 'team'],
       order: {
-        createdAt: 'DESC'
-      }
+        createdAt: 'DESC',
+      },
     });
   }
 
@@ -56,20 +56,23 @@ export class TasksService {
     return this.tasksRepository.find({
       where: { team: { id: teamId } },
       order: {
-        createdAt: 'DESC'
-      }
+        createdAt: 'DESC',
+      },
     });
   }
 
   async addComment(taskId: string, content: string, userId: string) {
-    const task = await this.tasksRepository.findOne({ where: { id: taskId }, relations: ['comments'] });
+    const task = await this.tasksRepository.findOne({
+      where: { id: taskId },
+      relations: ['comments'],
+    });
     const user = await this.usersRepository.findOneBy({ id: userId });
 
     const comment = this.commentsRepository.create({ content, task, user });
 
     return this.commentsRepository.save(comment);
   }
-  
+
   async update(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
     const task = await this.findOne(id);
 
@@ -90,10 +93,10 @@ export class TasksService {
     if (oldStatus !== updatedTask.status) {
       this.amqp.publish('task_exchange', 'task.status.changed', {
         task: updatedTask,
-        oldStatus
+        oldStatus,
       });
     }
-  
+
     return updatedTask;
   }
 

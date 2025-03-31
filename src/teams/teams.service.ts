@@ -1,4 +1,9 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Team } from './entities/team.entity';
@@ -19,23 +24,23 @@ export class TeamsService {
     const team = this.teamsRepository.create({
       ...createTeamDto,
       createdBy: creator,
-      users: [creator]
+      users: [creator],
     });
-  
+
     return this.teamsRepository.save(team);
-  }  
+  }
 
   async findAll(userId: string): Promise<any[]> {
     const teams = await this.teamsRepository.find({
       relations: ['users', 'createdBy', 'tasks'],
       order: {
-        createdAt: 'DESC'
-      }
+        createdAt: 'DESC',
+      },
     });
-  
-    return teams.map(team => ({
+
+    return teams.map((team) => ({
       ...team,
-      isMember: team.users.some(user => user.id === userId)
+      isMember: team.users.some((user) => user.id === userId),
     }));
   }
 
@@ -57,47 +62,47 @@ export class TeamsService {
 
   async remove(id: string, userId: string): Promise<void> {
     const team = await this.findOne(id);
-  
+
     if (team.createdBy.id !== userId) {
       throw new ForbiddenException('Somente o criador do time pode excluí-lo.');
     }
-  
+
     await this.teamsRepository.remove(team);
   }
 
   async addUserToTeam(teamId: string, userId: string): Promise<Team> {
     const team = await this.findOne(teamId);
     const user = await this.usersService.findOne(userId);
-  
+
     if (!team.users) {
       team.users = [];
     }
-  
-    const isAlreadyAssociated = team.users.some(u => u.id === userId);
-    
+
+    const isAlreadyAssociated = team.users.some((u) => u.id === userId);
+
     if (isAlreadyAssociated) {
       throw new BadRequestException('Usuário já está associado ao time.');
     }
-  
+
     team.users.push(user);
     return this.teamsRepository.save(team);
   }
 
   async removeUserFromTeam(teamId: string, userId: string): Promise<Team> {
     const team = await this.findOne(teamId);
-  
+
     if (!team.users) {
       throw new BadRequestException('Este time não possui usuários associados.');
     }
-  
-    const isAssociated = team.users.some(u => u.id === userId);
-  
+
+    const isAssociated = team.users.some((u) => u.id === userId);
+
     if (!isAssociated) {
       throw new BadRequestException('Usuário não está associado ao time.');
     }
-  
-    team.users = team.users.filter(user => user.id !== userId);
-  
+
+    team.users = team.users.filter((user) => user.id !== userId);
+
     return this.teamsRepository.save(team);
   }
 }

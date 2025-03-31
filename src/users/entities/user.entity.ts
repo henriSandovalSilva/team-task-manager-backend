@@ -13,10 +13,10 @@ export class User {
   @Column()
   password: string;
 
-  @ManyToMany(() => Team, team => team.users)
+  @ManyToMany(() => Team, (team) => team.users)
   @JoinTable()
   teams: Team[];
 
-  @OneToMany(() => Task, task => task.responsible)
+  @OneToMany(() => Task, (task) => task.responsible)
   tasks: Task[];
 }

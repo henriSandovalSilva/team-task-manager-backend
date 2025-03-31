@@ -1,4 +1,14 @@
-import { Controller, Post, Body, Get, Param, Patch, Delete, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Patch,
+  Delete,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
@@ -54,5 +64,5 @@ export class TeamsController {
   async leaveTeam(@Param('id') id: string, @Request() req) {
     const userId = req.user.id;
     return this.teamsService.removeUserFromTeam(id, userId);
-  } 
+  }
 }

@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany, ManyToOne, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  OneToMany,
+  ManyToOne,
+  CreateDateColumn,
+} from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Task } from 'src/tasks/entities/task.entity';
 
@@ -19,9 +27,9 @@ export class Team {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToMany(() => User, user => user.teams)
+  @ManyToMany(() => User, (user) => user.teams)
   users: User[];
 
-  @OneToMany(() => Task, task => task.team)
+  @OneToMany(() => Task, (task) => task.team)
   tasks: Task[];
 }
