@@ -41,7 +41,7 @@ Backend do sistema de gerenciamento de times e tarefas, desenvolvido com NestJS 
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/team-task-manager-backend.git
+git clone https://github.com/henriSandovalSilva/team-task-manager-backend.git
 cd team-task-manager-backend
 ```
 
