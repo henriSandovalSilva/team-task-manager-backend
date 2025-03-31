@@ -3,11 +3,15 @@ import { AuthGuard } from '@nestjs/passport';
 import { TeamsService } from './teams.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
+import { TasksService } from 'src/tasks/tasks.service';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('teams')
 export class TeamsController {
-  constructor(private readonly teamsService: TeamsService) {}
+  constructor(
+    private readonly teamsService: TeamsService,
+    private readonly tasksService: TasksService,
+  ) {}
 
   @Post()
   create(@Body() createTeamDto: CreateTeamDto, @Request() req) {
@@ -15,13 +19,19 @@ export class TeamsController {
   }
 
   @Get()
-  findAll() {
-    return this.teamsService.findAll();
+  findAll(@Request() req) {
+    const userId = req.user.id;
+    return this.teamsService.findAll(userId);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.teamsService.findOne(id);
+  }
+
+  @Get(':id/tasks')
+  getTasksForTeam(@Param('id') teamId: string) {
+    return this.tasksService.findByTeamId(teamId);
   }
 
   @Patch(':id')

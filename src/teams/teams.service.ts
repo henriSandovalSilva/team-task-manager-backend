@@ -19,13 +19,24 @@ export class TeamsService {
     const team = this.teamsRepository.create({
       ...createTeamDto,
       createdBy: creator,
+      users: [creator]
     });
   
     return this.teamsRepository.save(team);
   }  
 
-  findAll(): Promise<Team[]> {
-    return this.teamsRepository.find({ relations: ['users', 'tasks'] });
+  async findAll(userId: string): Promise<any[]> {
+    const teams = await this.teamsRepository.find({
+      relations: ['users', 'createdBy', 'tasks'],
+      order: {
+        createdAt: 'DESC'
+      }
+    });
+  
+    return teams.map(team => ({
+      ...team,
+      isMember: team.users.some(user => user.id === userId)
+    }));
   }
 
   async findOne(id: string): Promise<Team> {
