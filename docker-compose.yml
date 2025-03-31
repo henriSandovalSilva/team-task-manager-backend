@@ -52,6 +52,7 @@ services:
       - backend
     command: >
       sh -c "
+        rm -rf ./* &&
         git clone https://github.com/henriSandovalSilva/team-task-manager-frontend.git . &&
         npm install &&
         npm run start -- --host 0.0.0.0
