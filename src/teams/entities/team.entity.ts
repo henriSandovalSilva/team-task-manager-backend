@@ -6,6 +6,7 @@ import {
   OneToMany,
   ManyToOne,
   CreateDateColumn,
+  Index,
 } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Task } from 'src/tasks/entities/task.entity';
@@ -24,6 +25,7 @@ export class Team {
   @ManyToOne(() => User, { eager: true })
   createdBy: User;
 
+  @Index()
   @CreateDateColumn()
   createdAt: Date;
 

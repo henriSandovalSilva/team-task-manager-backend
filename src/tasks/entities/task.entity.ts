@@ -6,6 +6,7 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Team } from 'src/teams/entities/team.entity';
@@ -43,6 +44,7 @@ export class Task {
   @ManyToOne(() => User, (user) => user.tasks, { eager: true })
   responsible: User;
 
+  @Index()
   @ManyToOne(() => Team, (team) => team.tasks, { onDelete: 'CASCADE' })
   team: Team;
 
