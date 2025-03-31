@@ -58,3 +58,7 @@ Esse comando irá:
 - Instalar dependências do backend
 - Rodar as migrations automaticamente
 - Iniciar o servidor NestJS em modo produção (:3000)
+
+### 3. Acessar no navegador
+
+[http://localhost:4200](http://localhost:4200)
