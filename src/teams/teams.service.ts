@@ -12,6 +12,8 @@ import { UpdateTeamDto } from './dto/update-team.dto';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/entities/user.entity';
 
+type TeamWithMembership = Team & { isMember: boolean };
+
 @Injectable()
 export class TeamsService {
   constructor(
@@ -30,7 +32,7 @@ export class TeamsService {
     return this.teamsRepository.save(team);
   }
 
-  async findAll(userId: string): Promise<any[]> {
+  async findAll(userId: string): Promise<TeamWithMembership[]> {
     const teams = await this.teamsRepository.find({
       relations: ['users', 'createdBy', 'tasks'],
       order: {
